@@ -7,9 +7,9 @@ README = (HERE / 'README.md').read_text()
 
 setup(
     name='mr_scraper',
-    packages=find_namespace_packages(include=['mr_scraper']),
-    version='0.1.0',
-    description='LIbrary to create scrapers in python',
+    packages=find_namespace_packages(exclude=['build', 'dist', 'example', 'example.scrapers', 'tests']),
+    version='0.2.0',
+    description='Library to create scrapers in python',
     long_description=README,
     long_description_content_type='text/markdown',
     author='fernandojerez',
