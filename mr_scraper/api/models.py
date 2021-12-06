@@ -60,7 +60,7 @@ def default_query_fields(selector: str, **kwargs):
     fields = dict(**kwargs)
     fields['selector'] = selector
     return fields
- 
+
 
 def query_config(*attrs: str):
     """

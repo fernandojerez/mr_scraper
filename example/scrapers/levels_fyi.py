@@ -8,11 +8,11 @@ companies = ScraperConfig(
         url=base_url('https://www.levels.fyi')
     ),
     queries={
-        'Company': QueryConfig(
+        'companies': QueryConfig(
             selector=".company-outline-container",
             queries={
-                'Url': attribute_query(selector='a', attribute='href'),
-                'Name': text_query(selector='a')
+                'url': attribute_query(selector='a', attribute='href'),
+                'name': text_query(selector='a')
             }
         )
     }

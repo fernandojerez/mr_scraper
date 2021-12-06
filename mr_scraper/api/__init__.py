@@ -59,7 +59,7 @@ def dispatch(message: ScraperMessage):
 
 
 def visit_dom(cfg: ScraperConfig, content: str):
-    dom = BeautifulSoup(content)
+    dom = BeautifulSoup(content, features="html.parser")
     return visit_dom_queries(dom, cfg.queries)
 
 
@@ -69,10 +69,11 @@ def visit_dom_queries(dom: Tag, queries: Dict[str, QueryConfig]):
 
 def visit_dom_query(dom: Tag, value: QueryConfig):
     result = [dom_compound(value.transform(item), value.queries) for item in dom.select(value.selector)]
+
     if len(result) == 1:
         return result[0]
     return result
- 
+
 
 def dom_compound(value, queries: Dict[str, QueryConfig]):
     if queries is None:
