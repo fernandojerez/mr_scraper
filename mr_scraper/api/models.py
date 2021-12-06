@@ -42,6 +42,7 @@ class ContentConfig:
 class ScraperConfig:
     content: ContentConfig
     queries: Dict[str, QueryConfig]
+    callback: Optional[Callable[[any], any]] = None
 
 
 def base_url(base: str) -> GetUrl:

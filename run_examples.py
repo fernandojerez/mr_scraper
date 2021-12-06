@@ -5,4 +5,4 @@ from mr_scraper import api
 api.PUPPETEER_CHROME_PATH = r'C:\Program Files\Google\Chrome\Application\chrome.exe'
 
 if __name__ == '__main__':
-    print(dispatchers.levels_fyi())
+    dispatchers.levels_fyi()

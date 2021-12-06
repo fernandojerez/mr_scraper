@@ -55,7 +55,12 @@ def dispatch(message: ScraperMessage):
     url = cfg.content.url(message.payload)
     content = get_content(cfg.content.provider, url, message.payload, delay=cfg.content.delay)
 
-    return visit_dom(cfg, content)
+    result = visit_dom(cfg, content)
+
+    if cfg.callback is not None:
+        return cfg.callback(result)
+
+    return result
 
 
 def visit_dom(cfg: ScraperConfig, content: str):

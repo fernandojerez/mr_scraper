@@ -1,6 +1,15 @@
 from mr_scraper.api.models import ScraperConfig, ContentConfig, ContentProvider, QueryConfig, attribute_query, \
     text_query, base_url
 
+
+def print_results(result):
+    companies = result['companies']
+    for company in companies:
+        print(company)
+
+    return companies
+
+
 companies = ScraperConfig(
     content=ContentConfig(
         provider=ContentProvider.PUPPETEER,
@@ -15,5 +24,6 @@ companies = ScraperConfig(
                 'name': text_query(selector='a')
             }
         )
-    }
+    },
+    callback=print_results
 )
