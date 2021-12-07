@@ -2,7 +2,7 @@ from mr_scraper.api.models import ScraperConfig, ContentConfig, ContentProvider,
     text_query, base_url
 
 
-def print_results(result):
+def print_results(result, message):
     companies = result['companies']
     for company in companies:
         print(company)

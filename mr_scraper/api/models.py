@@ -6,7 +6,6 @@ from typing import Callable, Optional, TypeVar, Dict
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
-from mr_scraper.api import ScraperMessage
 from mr_scraper.api.transforms import get_attribute, get_text
 
 Input = TypeVar("Input")
@@ -37,6 +36,13 @@ class ContentConfig:
     delay: int = Field(default=2, description="delay before get content")
     url: GetUrl = lambda x: x.get('url')
     transform: Optional[TransformFunction] = None
+
+
+@dataclass
+class ScraperMessage:
+    scraper: str
+    type: str
+    payload: Dict
 
 
 @dataclass

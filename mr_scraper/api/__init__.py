@@ -4,20 +4,11 @@ from typing import Callable, Dict
 import requests
 from bs4 import BeautifulSoup
 from bs4.element import Tag
-from pydantic.dataclasses import dataclass
 from webpilot import config, robot
 
-from mr_scraper.api.models import ContentProvider, ScraperConfig, QueryConfig
+from mr_scraper.api.models import ContentProvider, ScraperConfig, QueryConfig, ScraperMessage
 
 PUPPETEER_CHROME_PATH = 'chromium-browser'
-
-
-@dataclass
-class ScraperMessage:
-    scraper: str
-    type: str
-    payload: Dict
-
 
 GetContent = Callable[[ContentProvider, str, dict], str]
 Dispatch = Callable[[ScraperMessage], any]

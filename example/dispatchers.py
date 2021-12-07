@@ -1,4 +1,4 @@
-from mr_scraper.api import ScraperMessage, dispatch
+from mr_scraper.api import dispatch, ScraperMessage
 
 
 def levels_fyi():
