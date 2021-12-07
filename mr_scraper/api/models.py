@@ -6,6 +6,7 @@ from typing import Callable, Optional, TypeVar, Dict
 from pydantic import Field
 from pydantic.dataclasses import dataclass
 
+from mr_scraper.api import ScraperMessage
 from mr_scraper.api.transforms import get_attribute, get_text
 
 Input = TypeVar("Input")
@@ -42,7 +43,7 @@ class ContentConfig:
 class ScraperConfig:
     content: ContentConfig
     queries: Dict[str, QueryConfig]
-    callback: Optional[Callable[[any], any]] = None
+    callback: Optional[Callable[[any, ScraperMessage], any]] = None
 
 
 def base_url(base: str) -> GetUrl:

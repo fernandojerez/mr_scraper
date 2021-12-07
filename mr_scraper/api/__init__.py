@@ -58,7 +58,7 @@ def dispatch(message: ScraperMessage):
     result = visit_dom(cfg, content)
 
     if cfg.callback is not None:
-        return cfg.callback(result)
+        return cfg.callback(result, message)
 
     return result
 
