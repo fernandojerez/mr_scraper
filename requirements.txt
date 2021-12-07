@@ -1,4 +1,4 @@
 requests~=2.26.0
-webpilot~=0.2.0
+webpilot~=0.3.0
 pydantic~=1.8.2
 beautifulsoup4~=4.10.0

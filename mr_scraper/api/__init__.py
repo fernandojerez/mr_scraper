@@ -1,17 +1,47 @@
 import importlib
-from typing import Callable, Dict
+from typing import Callable, Dict, List, Optional
 
 import requests
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 from webpilot import config, robot
+from webpilot.robot import Robot
 
 from mr_scraper.api.models import ContentProvider, ScraperConfig, QueryConfig, ScraperMessage
 
 PUPPETEER_CHROME_PATH = 'chromium-browser'
+PUPPETEER_HEADLESS = False
+PUPPETEER_SANDBOXED = True
+PUPPETEER_ROBOT: List[Optional[Robot]] = [None]
 
 GetContent = Callable[[ContentProvider, str, dict], str]
 Dispatch = Callable[[ScraperMessage], any]
+
+
+class ApiReleaser:
+    def __enter__(self):
+        print("Enter PuppeteerRelease")
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        print("Exit PuppeteerRelease")
+        end()
+
+
+def begin():
+    pilot_config = config.WebPilotConfig(
+        headless=PUPPETEER_HEADLESS,
+        sandboxed=PUPPETEER_SANDBOXED,  # this is because collab run with root
+        remote_port=33333,
+        chrome_executable=PUPPETEER_CHROME_PATH)
+    PUPPETEER_ROBOT[0] = robot.open_chrome(pilot_config)
+    return ApiReleaser()
+
+
+def end():
+    if PUPPETEER_ROBOT[0] is not None:
+        PUPPETEER_ROBOT[0].close()
+        PUPPETEER_ROBOT[0] = None
 
 
 def get_content_using_request(url: str, payload: dict, delay: int = 0) -> str:
@@ -19,15 +49,9 @@ def get_content_using_request(url: str, payload: dict, delay: int = 0) -> str:
 
 
 def get_content_using_puppeteer(url: str, payload: dict, delay: int = 0) -> str:
-    pilot_config = config.WebPilotConfig(
-        headless=True,
-        sandboxed=False,  # this is because collab run with root
-        remote_port=33333,
-        chrome_executable=PUPPETEER_CHROME_PATH)
-    with robot.open_chrome(pilot_config) as pilot:
-        tab = pilot.new_tab()
-        page = pilot.navigate(tab, url, delay)
-        return pilot.get_content(page)
+    with PUPPETEER_ROBOT[0].new_tab() as tab:
+        page = tab.navigate(url, delay)
+        return page.get_content()
 
 
 __content_providers__ = {
